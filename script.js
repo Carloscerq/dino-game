@@ -1,4 +1,5 @@
 const dino = document.getElementById('dino');
+dino.style.left = "20px";
 const background = document.getElementById('bg');
 let dinoJump = false;
 
@@ -6,7 +7,7 @@ document.addEventListener('keyup', event => {
   const key = event.code;
 
   if (key === 'Space' && !dinoJump) {
-    dispatchEvent = true;
+    dinoJump = true;
     let dinoPosition = parseInt(dino.style.bottom) || 5;
 
     const jumpAction = setInterval(() => {
@@ -40,6 +41,15 @@ document.addEventListener('keyup', event => {
     let cactusPosition = parseInt(cactus.style.right);
 
     if (cactusPosition > window.innerWidth) {
+      clearInterval(moveCactus);
+      background.removeChild(cactus);
+    }else if (
+      cactusPosition > 0 &&
+      cactusPosition + 60 == (window.innerWidth - parseInt(document.getElementById('dino').style.left)) &&
+      !dinoJump
+    ) {
+      // dino position is relative to left, while cactus is relative to right
+      alert('Game Over');
       clearInterval(moveCactus);
       background.removeChild(cactus);
     } else {
